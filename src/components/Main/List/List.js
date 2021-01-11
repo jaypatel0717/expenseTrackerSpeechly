@@ -15,7 +15,7 @@ import useStyles from "./styles";
 
 const List = () => {
   const classes = useStyles();
-  const globalState = useContext(ExpenseTrackerContext);
+  const { deleteTransaction } = useContext(ExpenseTrackerContext);
 
   const transaction = [
     {
