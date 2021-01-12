@@ -15,34 +15,11 @@ import useStyles from "./styles";
 
 const List = () => {
   const classes = useStyles();
-  const { deleteTransaction } = useContext(ExpenseTrackerContext);
+  const { deleteTransaction, trasacations } = useContext(ExpenseTrackerContext);
 
-  const transaction = [
-    {
-      id: 1,
-      type: "Income",
-      category: "Salary",
-      amount: 50,
-      date: "Web Dec 18",
-    },
-    {
-      id: 2,
-      type: "Expense",
-      category: "Pets",
-      amount: 510,
-      date: "Sat Dec 21",
-    },
-    {
-      id: 3,
-      type: "Income",
-      category: "Business",
-      amount: 1000,
-      date: "Mon Dec 10",
-    },
-  ];
   return (
     <MULIST dense={false} className={classes.list}>
-      {transaction.map((trans) => (
+      {trasacations.map((trans) => (
         <Slide direction="down" in mountOnEnter unmountOnExit key={trans.id}>
           <ListItem>
             <ListItemAvatar>
@@ -61,7 +38,11 @@ const List = () => {
               secondary={`$${trans.amount} - ${trans.date}`}
             />
             <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="delete" onClick="">
+              <IconButton
+                edge="end"
+                aria-label="delete"
+                onClick={() => deleteTransaction(trans.id)}
+              >
                 <Delete />
               </IconButton>
             </ListItemSecondaryAction>
