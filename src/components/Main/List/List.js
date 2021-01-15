@@ -15,11 +15,11 @@ import useStyles from "./styles";
 
 const List = () => {
   const classes = useStyles();
-  const { deleteTransaction, trasacations } = useContext(ExpenseTrackerContext);
+  const { deleteTransaction, transactions } = useContext(ExpenseTrackerContext);
 
   return (
     <MULIST dense={false} className={classes.list}>
-      {trasacations.map((trans) => (
+      {transactions.map((trans) => (
         <Slide direction="down" in mountOnEnter unmountOnExit key={trans.id}>
           <ListItem>
             <ListItemAvatar>

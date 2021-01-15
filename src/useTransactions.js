@@ -10,24 +10,26 @@ import {
 const useTransactions = (title) => {
   resetCategories();
   const { transactions } = useContext(ExpenseTrackerContext);
+
   const transactionsPerType = transactions.filter((t) => t.type === title);
   const total = transactionsPerType.reduce(
     (acc, currVal) => (acc += currVal.amount),
     0
   );
-
   const categories = title === "Income" ? incomeCategories : expenseCategories;
+
   transactionsPerType.forEach((t) => {
     const category = categories.find((c) => c.type === t.category);
     if (category) category.amount += t.amount;
   });
 
   const filterCategories = categories.filter((c) => c.amount > 0);
+
   const chartData = {
-    datesets: [
+    datasets: [
       {
         data: filterCategories.map((c) => c.amount),
-        backround: filterCategories.map((c) => c.color),
+        backgroundColor: filterCategories.map((c) => c.color),
       },
     ],
     labels: filterCategories.map((c) => c.type),
