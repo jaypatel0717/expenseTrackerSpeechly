@@ -1,31 +1,38 @@
 import React, { useContext } from "react";
 import {
-  List as MULIST,
+  List as MUIList,
   ListItem,
   ListItemAvatar,
-  ListItemText,
   Avatar,
+  ListItemText,
   ListItemSecondaryAction,
   IconButton,
   Slide,
 } from "@material-ui/core";
 import { Delete, MoneyOff } from "@material-ui/icons";
+
 import { ExpenseTrackerContext } from "../../../context/context";
 import useStyles from "./styles";
 
 const List = () => {
   const classes = useStyles();
-  const { deleteTransaction, transactions } = useContext(ExpenseTrackerContext);
+  const { transactions, deleteTransaction } = useContext(ExpenseTrackerContext);
 
   return (
-    <MULIST dense={false} className={classes.list}>
-      {transactions.map((trans) => (
-        <Slide direction="down" in mountOnEnter unmountOnExit key={trans.id}>
+    <MUIList dense={false} className={classes.list}>
+      {transactions.map((transaction) => (
+        <Slide
+          direction="down"
+          in
+          mountOnEnter
+          unmountOnExit
+          key={transaction.id}
+        >
           <ListItem>
             <ListItemAvatar>
               <Avatar
                 className={
-                  trans.type === "Income"
+                  transaction.type === "Income"
                     ? classes.avatarIncome
                     : classes.avatarExpense
                 }
@@ -34,14 +41,14 @@ const List = () => {
               </Avatar>
             </ListItemAvatar>
             <ListItemText
-              primary={trans.category}
-              secondary={`$${trans.amount} - ${trans.date}`}
+              primary={transaction.category}
+              secondary={`$${transaction.amount} - ${transaction.date}`}
             />
             <ListItemSecondaryAction>
               <IconButton
                 edge="end"
                 aria-label="delete"
-                onClick={() => deleteTransaction(trans.id)}
+                onClick={() => deleteTransaction(transaction.id)}
               >
                 <Delete />
               </IconButton>
@@ -49,7 +56,7 @@ const List = () => {
           </ListItem>
         </Slide>
       ))}
-    </MULIST>
+    </MUIList>
   );
 };
 

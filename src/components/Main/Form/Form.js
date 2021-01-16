@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   TextField,
   Typography,
@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import { ExpenseTrackerContext } from "../../../context/context";
 import { v4 as uuidv4 } from "uuid";
+import { useSpeechContext } from "@speechly/react-client";
 import {
   incomeCategories,
   expenseCategories,
@@ -18,6 +19,12 @@ import {
 import formatDate from "../../../utils/formatDate";
 
 import useStyle from "./styles";
+
+import {
+  PushToTalkButton,
+  PushToTalkButtonContainer,
+  ErrorPanel,
+} from "@speechly/react-ui";
 
 const initialState = {
   amount: "",
@@ -30,7 +37,11 @@ const Form = () => {
   const classes = useStyle();
   const [formData, setFormData] = useState(initialState);
   const { addTransaction } = useContext(ExpenseTrackerContext);
+  const { segment } = useSpeechContext();
+
   const createTransaction = () => {
+    if (Number.isNaN(Number(formData.amount)) || !formData.date.includes("-"))
+      return;
     const transacation = {
       ...formData,
       amount: Number(formData.amount),
@@ -43,14 +54,68 @@ const Form = () => {
   const selectedCategories =
     formData.type === "Income" ? incomeCategories : expenseCategories;
 
+  useEffect(() => {
+    if (segment) {
+      if (segment.intent.intent === "add_expense") {
+        setFormData({ ...formData, type: "Expense" });
+      } else if (segment.intent.intent === "add_income") {
+        setFormData({ ...formData, type: "Income" });
+      } else if (
+        segment.isFinal &&
+        segment.intent.intent === "create_transaction"
+      ) {
+        return createTransaction();
+      } else if (
+        segment.isFinal &&
+        segment.intent.intent === "cancel_transaction"
+      ) {
+        return setFormData(initialState);
+      }
+
+      segment.entities.forEach((s) => {
+        const category = `${s.value.charAt(0)}${s.value
+          .slice(1)
+          .toLowerCase()}`;
+
+        switch (s.type) {
+          case "amount":
+            setFormData({ ...formData, amount: s.value });
+            break;
+          case "category":
+            if (incomeCategories.map((iC) => iC.type).includes(category)) {
+              setFormData({ ...formData, type: "Income", category });
+            } else if (
+              expenseCategories.map((iC) => iC.type).includes(category)
+            ) {
+              setFormData({ ...formData, type: "Expense", category });
+            }
+            break;
+          case "date":
+            setFormData({ ...formData, date: s.value });
+            break;
+          default:
+            break;
+        }
+      });
+
+      if (
+        segment.isFinal &&
+        formData.amount &&
+        formData.category &&
+        formData.type &&
+        formData.date
+      ) {
+        createTransaction();
+      }
+    }
+  }, [segment]);
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Typography
-          align="center"
-          variant="subtitle2"
-          gutterBottom
-        ></Typography>
+        <Typography align="center" variant="subtitle2" gutterBottom>
+          {segment && segment.words.map((w) => w.value).join(" ")}
+        </Typography>
       </Grid>
       <Grid item xs={6}>
         <FormControl fullWidth>
@@ -110,6 +175,11 @@ const Form = () => {
       >
         Create
       </Button>
+
+      <PushToTalkButtonContainer>
+        <PushToTalkButton />
+        <ErrorPanel />
+      </PushToTalkButtonContainer>
     </Grid>
   );
 };
