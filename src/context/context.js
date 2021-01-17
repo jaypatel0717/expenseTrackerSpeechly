@@ -1,3 +1,4 @@
+import { Accordion } from "@material-ui/core";
 import React, { useReducer, createContext } from "react";
 
 import contextReducer from "./contextReducer";
@@ -18,12 +19,19 @@ export const Provider = ({ children }) => {
     dispatch({ type: "ADD_TRANSACTION", payload: transactions });
   };
 
+  const balance = transactions.reduce(
+    (acc, currVal) =>
+      currVal.type == "Expense" ? acc - currVal.amount : acc + currVal.amount,
+    0
+  );
+
   return (
     <ExpenseTrackerContext.Provider
       value={{
         deleteTransaction,
         addTransaction,
         transactions,
+        balance,
       }}
     >
       {children}
