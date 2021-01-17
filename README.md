@@ -83,7 +83,6 @@ cahrt.js
 react-chartjs-2 uuid
 
 
-
 npm install react@16.12.0 react-dom@16.12.0
 npm install @material-ui/core @material-ui/icons @material-ui/lab
 npm install @speechly/react-client @speechly/react-ui
