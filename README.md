@@ -1,8 +1,8 @@
-### Twitter Clone React Application
+### Expense Tracker React Application using speechly
 
 <br/>
 
-![Alt text](https://github.com/jaypatel0717/twitter_clone/blob/master/public/home.png)
+![Alt text](https://github.com/jaypatel0717/expenseTrackerSpeechly/blob/main/src/assets/Screen.png)
 
 -> This is Twitter clone app using react, firebase realtime database, material UI icon.<br/>
 -> You twit the massage and upload images on this twitter clone<br/>
