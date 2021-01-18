@@ -6,7 +6,7 @@
 
 -> This is Expense Tracker app using react, localStorage for data, material UI design and speechly real time voice for user interface.<br/>
 -> You can create expense and income data by holding the power button and speak Ex - "Add Expense for $50 in category House for Tuesday", it will add data in browser localStorage. As you speak it will select and enter the data in form by speechly.<br/>
--> Or you can create expense and income data by clicking on creare button as well.<br/>
+-> Or you can create expense and income data by clicking on create button as well.<br/>
 -> Open [Expense Budget Tracker](https://twitterclone-19bbd.web.app/) to view it in the browser.
 <br/>
 
