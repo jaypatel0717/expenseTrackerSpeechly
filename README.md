@@ -1,20 +1,21 @@
-### Expense Tracker React Application using speechly
+### Expense Budget Tracker React Application using speechly
 
 <br/>
 
 ![Alt text](https://github.com/jaypatel0717/expenseTrackerSpeechly/blob/main/src/assets/Screen.png)
 
--> This is Twitter clone app using react, firebase realtime database, material UI icon.<br/>
--> You twit the massage and upload images on this twitter clone<br/>
--> Open [Twitter clone](https://twitterclone-19bbd.web.app/) to view it in the browser.
+-> This is Expense Tracker app using react, localStorage for data, material UI design and speechly real time voice for user interface.<br/>
+-> You can create expense and income data by holding the power button and speak Ex - "Add Expense for $50 in category House for Tuesday", it will add data in browser localStorage. As you speak it will select and enter the data in form by speechly.<br/>
+-> Or you can create expense and income data by clicking on creare button as well.
+-> Open [Expense Budget Tracker](https://twitterclone-19bbd.web.app/) to view it in the browser.
 <br/>
 
 #### Used Technologies :
 
 1. React JS
-2. Firebase firestone realtime database
-3. Material UI
-4. React-Flip-Move
+2. Speechly real time voice for user interface.
+3. Material UI design
+4. Chart.js
 5. React Context API
 6. Deploy app using Firebase
 
