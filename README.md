@@ -13,7 +13,7 @@
 #### Used Technologies :
 
 1. React JS
-2. Speechly real time voice for user interface.
+2. Speechly real time voice for user interface
 3. Material UI design
 4. Chart.js
 5. React Context API
@@ -21,19 +21,15 @@
 
 #### To start this application :
 
+
 ```
-Go to -> cd twitter_clone
+Go to -> cd expenseTrackerSpeechly
 
 npm install
 npm start
-
-npm install react-route-dom
-npm install react-flip-move
-npm install @material-ui/core
-npm install @material-ui/icons
 ```
 
-### Install dependency
+#### Install dependencies : 
 
 ```
 npm i react@16.12.0
