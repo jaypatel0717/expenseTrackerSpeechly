@@ -13,9 +13,9 @@
 #### Used Technologies :
 
 1. React JS
-2. Speechly (Speechly is real time voice for user interface)(https://www.speechly.com/)
-3. Material UI (for user interface)(https://material-ui.com/)
-4. Chart.js (for data visualization)(https://www.chartjs.org/)
+2. Speechly ( Speechly is real time voice for user interface )( https://www.speechly.com/ )
+3. Material UI ( for user interface )( https://material-ui.com/ )
+4. Chart.js ( for data visualization )( https://www.chartjs.org/ )
 5. React Context API
 6. Deploy app using Firebase
 
