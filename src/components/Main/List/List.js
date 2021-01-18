@@ -9,7 +9,7 @@ import {
   IconButton,
   Slide,
 } from "@material-ui/core";
-import { Delete, MoneyOff } from "@material-ui/icons";
+import { ClassSharp, Delete, MoneyOff } from "@material-ui/icons";
 
 import { ExpenseTrackerContext } from "../../../context/context";
 import useStyles from "./styles";
