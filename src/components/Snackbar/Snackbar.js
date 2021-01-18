@@ -2,12 +2,16 @@ import React from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 
-import useStyle from "./styles";
+import useStyles from "./styles";
 
-function CustomizedSnackbar({ open, setOpen }) {
-  const classes = useStyle();
+const CustomizedSnackbar = ({ open, setOpen }) => {
+  const classes = useStyles();
+
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") return;
+    if (reason === "clickaway") {
+      return;
+    }
+
     setOpen(false);
   };
 
@@ -16,7 +20,7 @@ function CustomizedSnackbar({ open, setOpen }) {
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
         open={open}
-        autoHideDuration={3000}
+        autoHideDuration={6000}
         onClose={handleClose}
       >
         <MuiAlert
@@ -25,11 +29,11 @@ function CustomizedSnackbar({ open, setOpen }) {
           elevation={6}
           variant="filled"
         >
-          Transaction successfully created!
+          Transaction successfully created.
         </MuiAlert>
       </Snackbar>
     </div>
   );
-}
+};
 
 export default CustomizedSnackbar;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   TextField,
   Typography,
@@ -9,23 +9,17 @@ import {
   Select,
   MenuItem,
 } from "@material-ui/core";
-import { ExpenseTrackerContext } from "../../../context/context";
 import { v4 as uuidv4 } from "uuid";
+
 import { useSpeechContext } from "@speechly/react-client";
+import Snackbar from "../../Snackbar/Snackbar";
+import formatDate from "../../../utils/formatDate";
+import { ExpenseTrackerContext } from "../../../context/context";
 import {
   incomeCategories,
   expenseCategories,
 } from "../../../constants/categories";
-import formatDate from "../../../utils/formatDate";
-
-import useStyle from "./styles";
-
-import {
-  PushToTalkButton,
-  PushToTalkButtonContainer,
-  ErrorPanel,
-} from "@speechly/react-ui";
-import CustomizedSnackbar from "../../Snackbar/Snackbar";
+import useStyles from "./styles";
 
 const initialState = {
   amount: "",
@@ -34,28 +28,33 @@ const initialState = {
   date: formatDate(new Date()),
 };
 
-const Form = () => {
-  const classes = useStyle();
-  const [formData, setFormData] = useState(initialState);
+const NewTransactionForm = () => {
+  const classes = useStyles();
   const { addTransaction } = useContext(ExpenseTrackerContext);
+  const [formData, setFormData] = useState(initialState);
   const { segment } = useSpeechContext();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
 
   const createTransaction = () => {
     if (Number.isNaN(Number(formData.amount)) || !formData.date.includes("-"))
       return;
-    const transacation = {
+
+    if (incomeCategories.map((iC) => iC.type).includes(formData.category)) {
+      setFormData({ ...formData, type: "Income" });
+    } else if (
+      expenseCategories.map((iC) => iC.type).includes(formData.category)
+    ) {
+      setFormData({ ...formData, type: "Expense" });
+    }
+
+    setOpen(true);
+    addTransaction({
       ...formData,
       amount: Number(formData.amount),
       id: uuidv4(),
-    };
-    setOpen(true);
-    addTransaction(transacation);
+    });
     setFormData(initialState);
   };
-
-  const selectedCategories =
-    formData.type === "Income" ? incomeCategories : expenseCategories;
 
   useEffect(() => {
     if (segment) {
@@ -113,12 +112,20 @@ const Form = () => {
     }
   }, [segment]);
 
+  const selectedCategories =
+    formData.type === "Income" ? incomeCategories : expenseCategories;
+
   return (
     <Grid container spacing={2}>
-      <CustomizedSnackbar open={open} setOpen={setOpen} />
+      <Snackbar open={open} setOpen={setOpen} />
       <Grid item xs={12}>
         <Typography align="center" variant="subtitle2" gutterBottom>
-          {segment && segment.words.map((w) => w.value).join(" ")}
+          {segment ? (
+            <div className="segment">
+              {segment.words.map((w) => w.value).join(" ")}
+            </div>
+          ) : null}
+          {/* {isSpeaking ? <BigTranscript /> : 'Start adding transactions'}  */}
         </Typography>
       </Grid>
       <Grid item xs={6}>
@@ -142,9 +149,9 @@ const Form = () => {
               setFormData({ ...formData, category: e.target.value })
             }
           >
-            {selectedCategories.map((category) => (
-              <MenuItem key={category.type} value={category.type}>
-                {category.type}
+            {selectedCategories.map((c) => (
+              <MenuItem key={c.type} value={c.type}>
+                {c.type}
               </MenuItem>
             ))}
           </Select>
@@ -154,16 +161,16 @@ const Form = () => {
         <TextField
           type="number"
           label="Amount"
-          fullWidth
           value={formData.amount}
           onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+          fullWidth
         />
       </Grid>
       <Grid item xs={6}>
         <TextField
-          type="date"
-          label="Date"
           fullWidth
+          label="Date"
+          type="date"
           value={formData.date}
           onChange={(e) =>
             setFormData({ ...formData, date: formatDate(e.target.value) })
@@ -179,13 +186,7 @@ const Form = () => {
       >
         Create
       </Button>
-
-      <PushToTalkButtonContainer>
-        <PushToTalkButton />
-        <ErrorPanel />
-      </PushToTalkButtonContainer>
     </Grid>
   );
 };
-
-export default Form;
+export default NewTransactionForm;
