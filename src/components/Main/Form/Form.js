@@ -125,7 +125,6 @@ const NewTransactionForm = () => {
               {segment.words.map((w) => w.value).join(" ")}
             </div>
           ) : null}
-          {/* {isSpeaking ? <BigTranscript /> : 'Start adding transactions'}  */}
         </Typography>
       </Grid>
       <Grid item xs={6}>
@@ -179,7 +178,7 @@ const NewTransactionForm = () => {
       </Grid>
       <Button
         className={classes.button}
-        variant="outlined"
+        variant="contained"
         color="primary"
         fullWidth
         onClick={createTransaction}
