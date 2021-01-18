@@ -13,14 +13,13 @@
 #### Used Technologies :
 
 1. React JS
-2. Speechly real time voice for user interface
-3. Material UI design
-4. Chart.js
+2. Speechly (Speechly is real time voice for user interface)(https://www.speechly.com/)
+3. Material UI (for user interface)(https://material-ui.com/)
+4. Chart.js (for data visualization)(https://www.chartjs.org/)
 5. React Context API
 6. Deploy app using Firebase
 
 #### To start this application :
-
 
 ```
 Go to -> cd expenseTrackerSpeechly
@@ -29,7 +28,7 @@ npm install
 npm start
 ```
 
-#### Install dependencies : 
+#### Install dependencies :
 
 ```
 npm i react@16.12.0
@@ -41,8 +40,6 @@ react-dom@16.12.0
 @speechly/react-ui
 cahrt.js
 react-chartjs-2 uuid
-
-
 npm install react@16.12.0 react-dom@16.12.0
 npm install @material-ui/core @material-ui/icons @material-ui/lab
 npm install @speechly/react-client @speechly/react-ui
